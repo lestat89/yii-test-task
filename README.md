@@ -4,24 +4,24 @@
 -------------
 Требуются установленные пакеты: ``` docker docker-compose ```
 
+Шаги выполнения по ``` docker-compose ```:
 1. ``` docker-compose -f ./docker-compose.yml build --build-arg USER_ID=$(id -u ${USER}) --build-arg GROUP_ID=$(id -g ${USER}) issue-app ```
 2. ``` docker-compose -f ./docker-compose.yml build --build-arg USER_ID=$(id -u ${USER}) --build-arg GROUP_ID=$(id -g ${USER}) issue-web ```
 3. ``` docker-compose up -d ```
 
-Подготовка ``` docker exec -u www-data -it issue-app bash ```:
--------------
-``` composer install ```
-``` ./yii migrate ```
+Шаги по настройке yii:
+1. ``` docker exec -u www-data -it issue-app bash ```
+2. ``` composer install ```
+3. ``` ./yii migrate ```
 
-После настройки будет доступно по адресу
--------------
-``` http://130.10.0.2/ ```
+После настройки будет доступно по адресу ``` http://130.10.0.2/ ```
 
-На странице авторизации есть кнопка рагистрации.
+На странице авторизации есть кнопка регистрации.
+
 После регистрации/авторизации будет доступен список пользователей.
 
 
-
+```
 Тестове завдання:
 
 Реалізувати дві сторінки:
@@ -62,4 +62,4 @@
 користувачів
         - використання компонента GridView
         - реалізувати фільтрацію та сортування (функції "з коробки")
-
+```
