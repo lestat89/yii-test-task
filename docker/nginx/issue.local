@@ -1,0 +1,35 @@
+server {
+    listen *:80;
+    server_name issue.docker;
+
+    access_log /var/www/runtime/logs/issue-nginx-access.log;
+    error_log /var/www/runtime/logs/issue-nginx-error.log;
+
+    root /var/www/web/;
+
+    index index.php index.html index.htm;
+
+    client_max_body_size 15m;
+
+    location / {
+        add_header Access-Control-Allow-Origin *;
+
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        try_files      $uri = 404;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_pass  issue-app:9000;
+        fastcgi_index index.php;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+
+    location ~* \.(ico|htm|jpg|png|gif)$ {
+        access_log        off;
+        log_not_found     off;
+        expires           360d;
+        add_header        Cache-Control       'public';
+    }
+}
